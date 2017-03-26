@@ -9,6 +9,10 @@ module.exports = function(app){
 		controller.a1(res);
 		//console.log(_rotated([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]));	
 	});
+
+	app.get("/a2", function(req,res){
+		controller.a2(res);
+	});
 }
 
 function _sphere(position){

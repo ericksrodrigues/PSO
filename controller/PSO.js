@@ -1,36 +1,14 @@
 const makeparticula = require("./particula");
 
-function _position(min,max){
-	let position = [];
-	for(let i = 0; i < 30; i++){
-		position.push(getRandomInt(min,max));
-	}
-	return position;
-}
-
-function _speed(){
-	let speed = [];
-	for(let i = 0; i < 30; i++){
-		speed.push(0);
-	}
-	return speed;	
-}
-
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-module.exports = function(c1,c2,m,fitness,w,min,max){
+module.exports = function(particulas,c1,c2,m,fitness,w,min,max,analise){
 		
 	let gBest;
-	let particulas = [];
-	array_fitness = [];
+	let array_fitness = [];
+	let p = particulas.slice();
 
-	for(let i = 0; i < 30; i++){
-	 	particulas.push(makeparticula(_position(min,max),_speed()));
-	}
+	
 	for(let i = 0; i < m ; i++){
-		particulas.forEach(function(particula,indice){
+		p.forEach(function(particula,indice){
 			//console.log("Posições",particula.position);
 			if(i == 0 && indice == 0)
 				gBest = particula.position.slice();
@@ -39,23 +17,28 @@ module.exports = function(c1,c2,m,fitness,w,min,max){
 
 				if(fitness(particula.best) < fitness(gBest)){
 					gBest = particula.best.slice();
-					console.log("SWITCH1");
+					//console.log("SWITCH1");
 				}
 			}else if(fitness(particula.position) < fitness(particula.best)){
 				particula.best = particula.position.slice();
 
 				if(fitness(particula.best) < fitness(gBest)){
 					gBest = particula.best.slice();
-					console.log("SWITCH2");
+					//console.log("SWITCH2");
 				}
 			}
-
-			particula.update_speed(c1,c2,w,gBest.slice());
+			if(analise == "a1" || analise == "a2a")
+				particula.update_speed(c1,c2,w,gBest);
+			else if(analise == "a2c")
+				particula.update_speed_clerc(c1,c2,gBest.slice());
+			else if(analise == "a2b")
+				particula.update_speed_dec(c1,c2,gBest.slice(),i,m);
 			particula.update_position();
+
 			
 		});
 		array_fitness.push(fitness(gBest));
-		console.log("iteracao: ", i, "fitness", fitness(gBest));
+		//console.log("iteracao: ", i, "fitness", fitness(gBest));
 	}
 
 	return array_fitness;
