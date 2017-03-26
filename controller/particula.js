@@ -9,12 +9,14 @@ module.exports = function(position, speed){
 
 			for(let i = 0; i < 30 ; i++){
 				this.speed[i] = w*this.speed[i] + Math.random()*c1*(this.best[i] - this.position[i]) + Math.random()*c2*(gbest[i] - this.position[i]);
+				//console.log("SPEED: ", this.speed[i]);
+
 			}
 		},
-		update_position : function(){
-			console.log(this.speed);
+		update_position : function(min,max){
 			for(let i = 0; i < 30 ; i++){
 				this.position[i] = this.position[i] + this.speed[i];
+				
 			}
 		}
 	};
