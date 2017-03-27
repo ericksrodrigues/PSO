@@ -13,6 +13,10 @@ module.exports = function(app){
 	app.get("/a2", function(req,res){
 		controller.a2(res);
 	});
+
+	app.get("/a3",function(req,res){
+		controller.a3(res);
+	});
 }
 
 function _sphere(position){

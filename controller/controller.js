@@ -6,7 +6,7 @@ exports.a1 = function(res){
 	const c1 = 2.05,
 		c2 = 2.05,
 		m = 10000,
-		w = 0.2,
+		w = 1,
 		min = -5,
 		max = 5;
 	let particulas = [];
@@ -38,11 +38,6 @@ exports.a2 = function(res){
 		w = 0.8,
 		min = -5,
 		max = 5;
-	let particulas = [];
-	let pa
-	for(let i = 0; i < 30; i++){
-	 	particulas.push(makeparticula(_position(min,max),_speed()));
-	}
 	q.spread([_a2_sphere(c1,c2,m,w,min,max),_a2_rotated(c1,c2,m,w,min,max),_a2_rosenbrock(c1,c2,m,w,min,max)], function(sphere,rotated,rosenbrock){
 			res.render("a2",{
 			"sphere" : sphere,
@@ -52,6 +47,70 @@ exports.a2 = function(res){
 	});
 
 }
+
+exports.a3 = function(res){
+	const c1 = 2.05,
+		c2 = 2.05,
+		m = 10000,
+		w = 0.4,
+		min = -5,
+		max = 5;
+			q.spread([_a3_sphere(c1,c2,m,w,min,max),_a3_rotated(c1,c2,m,w,min,max),_a3_rosenbrock(c1,c2,m,w,min,max)], function(sphere,rotated,rosenbrock){
+			res.render("a3",{
+			"sphere" : sphere,
+			"rotated": rotated,
+			"rosenbrock": rosenbrock
+		})
+	});
+}
+
+_a3_sphere = function(c1,c2,m,w,min,max){
+	let particulas = [];
+	let particulas2 = [];
+	let particulas3 = [];
+
+	for(let i = 0; i < 30; i++){
+	 	particulas.push(makeparticula(_position(min,max),_speed()));
+	 	particulas2.push(makeparticula(particulas[i].position.slice(),_speed()));
+	 	particulas3.push(makeparticula(particulas[i].position.slice(),_speed()));
+	}
+	return q.spread([PSO(particulas.slice(),c1,c2,m,_sphere,w,min,max,"a3a"),PSO(particulas2.slice(),c1,c2,m,_sphere,w,min,max,"a3b")],function(r1,r2){
+		//console.log("R1",r1,"R2",r2,"R3",r3);
+		return [r1,r2];
+	});
+}
+_a3_rotated = function(c1,c2,m,w,min,max){
+	let particulas = [];
+	let particulas2 = [];
+	let particulas3 = [];
+
+	for(let i = 0; i < 30; i++){
+	 	particulas.push(makeparticula(_position(min,max),_speed()));
+	 	particulas2.push(makeparticula(particulas[i].position.slice(),_speed()));
+	 	particulas3.push(makeparticula(particulas[i].position.slice(),_speed()));
+	}
+	return q.spread([PSO(particulas.slice(),c1,c2,m,_rotated,w,min,max,"a3a"),PSO(particulas2.slice(),c1,c2,m,_rotated,w,min,max,"a3b")],function(r1,r2){
+		//console.log("R1",r1,"R2",r2,"R3",r3);
+		return [r1,r2];
+	});
+}
+
+_a3_rosenbrock = function(c1,c2,m,w,min,max){
+	let particulas = [];
+	let particulas2 = [];
+	let particulas3 = [];
+
+	for(let i = 0; i < 30; i++){
+	 	particulas.push(makeparticula(_position(min,max),_speed()));
+	 	particulas2.push(makeparticula(particulas[i].position.slice(),_speed()));
+	 	particulas3.push(makeparticula(particulas[i].position.slice(),_speed()));
+	}
+	return q.spread([PSO(particulas.slice(),c1,c2,m,_rosenbrock,w,min,max,"a3a"),PSO(particulas2.slice(),c1,c2,m,_rosenbrock,w,min,max,"a3b")],function(r1,r2){
+		//console.log("R1",r1,"R2",r2,"R3",r3);
+		return [r1,r2];
+	});
+}
+
 
 _a2_sphere = function(c1,c2,m,w,min,max){
 	let particulas = [];
@@ -84,7 +143,7 @@ _a2_rotated = function(c1,c2,m,w,min,max){
 	});
 }
 
-_a2_rosenbrock = function(c1,c2,m,w,min,max){
+_a2_rosenbrock = function(c1,c2,m,w,min,max,analise){
 	let particulas = [];
 	let particulas2 = [];
 	let particulas3 = [];
