@@ -1,6 +1,8 @@
 const q = require('q');
 const PSO = require("./PSO");
 const makeparticula = require("./particula");
+const lodash = require('lodash');
+const async = require('async');
 
 exports.a1 = function(res){
 	const c1 = 2.05,
@@ -19,9 +21,9 @@ exports.a1 = function(res){
 	}
 
 	//console.log("inicio",particulas);
-	q.spread([PSO(particulas.slice(),c1,c2,m,_sphere,w,min,max,"a1"),PSO(particulas2.slice(),c1,c2,m,_rotated,w,min,max,"a1"),PSO(particulas3.slice(),c1,c2,m,_rosenbrock,w,min,max,"a1")],function(sphere,rotated,rosenbrock){
-		console.log(_rosenbrock([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]));	
+	q.all([PSO(lodash.clone(particulas),c1,c2,m,_sphere,w,min,max,"a1"),PSO(lodash.clone(particulas2),c1,c2,m,_rotated,w,min,max,"a1"),PSO(lodash.clone(particulas3),c1,c2,m,_rosenbrock,w,min,max,"a1")]).spread(function(sphere,rotated,rosenbrock){
 		//console.log("fim", particulas);
+		console.log("RESULTADOS",sphere,rotated,rosenbrock);
 		res.render("a1",{
 			"sphere": sphere,
 			"rotated": rotated,
@@ -74,9 +76,9 @@ _a3_sphere = function(c1,c2,m,w,min,max){
 	 	particulas2.push(makeparticula(particulas[i].position.slice(),_speed()));
 	 	particulas3.push(makeparticula(particulas[i].position.slice(),_speed()));
 	}
-	return q.spread([PSO(particulas.slice(),c1,c2,m,_sphere,w,min,max,"a3a"),PSO(particulas2.slice(),c1,c2,m,_sphere,w,min,max,"a3b")],function(r1,r2){
+	return q.spread([PSO(particulas.slice(),c1,c2,m,_sphere,w,min,max,"a3a"),PSO(particulas2.slice(),c1,c2,m,_sphere,w,min,max,"a3b"),PSO(particulas3.slice(),c1,c2,m,_sphere,w,min,max,"a3c")],function(r1,r2,r3){
 		//console.log("R1",r1,"R2",r2,"R3",r3);
-		return [r1,r2];
+		return [r1,r2,r3];
 	});
 }
 _a3_rotated = function(c1,c2,m,w,min,max){
@@ -89,9 +91,9 @@ _a3_rotated = function(c1,c2,m,w,min,max){
 	 	particulas2.push(makeparticula(particulas[i].position.slice(),_speed()));
 	 	particulas3.push(makeparticula(particulas[i].position.slice(),_speed()));
 	}
-	return q.spread([PSO(particulas.slice(),c1,c2,m,_rotated,w,min,max,"a3a"),PSO(particulas2.slice(),c1,c2,m,_rotated,w,min,max,"a3b")],function(r1,r2){
+	return q.spread([PSO(particulas.slice(),c1,c2,m,_rotated,w,min,max,"a3a"),PSO(particulas2.slice(),c1,c2,m,_rotated,w,min,max,"a3b"),PSO(particulas3.slice(),c1,c2,m,_rotated,w,min,max,"a3c")],function(r1,r2,r3){
 		//console.log("R1",r1,"R2",r2,"R3",r3);
-		return [r1,r2];
+		return [r1,r2,r3];
 	});
 }
 
@@ -105,9 +107,9 @@ _a3_rosenbrock = function(c1,c2,m,w,min,max){
 	 	particulas2.push(makeparticula(particulas[i].position.slice(),_speed()));
 	 	particulas3.push(makeparticula(particulas[i].position.slice(),_speed()));
 	}
-	return q.spread([PSO(particulas.slice(),c1,c2,m,_rosenbrock,w,min,max,"a3a"),PSO(particulas2.slice(),c1,c2,m,_rosenbrock,w,min,max,"a3b")],function(r1,r2){
+	return q.spread([PSO(particulas.slice(),c1,c2,m,_rosenbrock,w,min,max,"a3a"),PSO(particulas2.slice(),c1,c2,m,_rosenbrock,w,min,max,"a3b"),PSO(particulas3.slice(),c1,c2,m,_rosenbrock,w,min,max,"a3c")],function(r1,r2,r3){
 		//console.log("R1",r1,"R2",r2,"R3",r3);
-		return [r1,r2];
+		return [r1,r2,r3];
 	});
 }
 

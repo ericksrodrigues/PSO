@@ -7,9 +7,9 @@
 
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Iterações', 'Global', 'Local'],
+          ['Iterações', 'Global', 'Local','Focal'],
           <% for(let i = 0; i < sphere[0].length ; i++){ %>
-          ['<%= i+1 %>',  <%= sphere[0][i] %>,<%= sphere[1][i] %>]<% if(i != sphere[0].length - 1){ %>,<% }} %>
+          ['<%= i+1 %>',  <%= sphere[0][i] %>,<%= sphere[1][i] %>,<%= sphere[2][i] %>]<% if(i != sphere[0].length - 1){ %>,<% }} %>
           
         ]);
 
@@ -22,18 +22,18 @@
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
         chart.draw(data,options);
         data = google.visualization.arrayToDataTable([
-          ['Iterações', 'Global', 'Local'],
+          ['Iterações', 'Global', 'Local','Focal'],
             <% for(let i = 0; i < sphere[0].length ; i++){ %>
-          ['<%= i+1 %>',  <%= rotated[0][i] %>,<%= rotated[1][i] %>]<% if(i != sphere[0].length - 1){ %>,<% }} %>
+          ['<%= i+1 %>',  <%= rotated[0][i] %>,<%= rotated[1][i] %>,<%= rotated[2][i] %>]<% if(i != sphere[0].length - 1){ %>,<% }} %>
             
         ]);
         options.title = "Análise 3 - Rotated";
         chart = new google.visualization.LineChart(document.getElementById('curve_chart2'));
         chart.draw(data,options);
         data = google.visualization.arrayToDataTable([
-          ['Iterações', 'Global', 'Local'],
+          ['Iterações', 'Global', 'Local','Focal'],
             <% for(let i = 0; i < sphere[0].length ; i++){ %>
-            ['<%= i+1 %>',  <%= rosenbrock[0][i] %>,<%= rosenbrock[1][i] %>]<% if(i != sphere[0].length - 1){ %>,<% }} %>
+            ['<%= i+1 %>',  <%= rosenbrock[0][i] %>,<%= rosenbrock[1][i]%>,<%= rosenbrock[2][i] %>]<% if(i != sphere[0].length - 1){ %>,<% }} %>
             
         ]);
         options.title = "Análise 3 - Rosenbrock";
