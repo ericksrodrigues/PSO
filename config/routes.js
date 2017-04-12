@@ -19,7 +19,7 @@ module.exports = function(app){
 	});
 
 	app.get("/ws",function(req,res){
-		res.send(200).json({usuario: "allyson", email: "allyson@2017", endereco: "Rua tal tal"});
+		res.send({usuario: "allyson", email: "allyson@2017", endereco: "Rua tal tal"});
 	});
 }
 
