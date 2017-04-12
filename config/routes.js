@@ -17,6 +17,10 @@ module.exports = function(app){
 	app.get("/a3",function(req,res){
 		controller.a3(res);
 	});
+
+	app.get("/ws"),function(req,res){
+		res.send(200).json({usuario: "allyson", email: "allyson@2017", endereco: "Rua tal tal"});
+	}
 }
 
 function _sphere(position){

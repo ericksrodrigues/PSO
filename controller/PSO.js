@@ -12,7 +12,7 @@ module.exports = function(particulas,c1,c2,m,fitness,w,min,max,analise){
 	let real_gbest_position;
 	let deferred = Q.defer();
 
-	for (let j = 0; j < 30; j++){
+	for (let j = 0; j < 1; j++){
 		p = lodash.cloneDeep(particulas);
 	for(let i = 0; i < m ; i++){
 		p.forEach(function(particula,indice){
@@ -90,7 +90,7 @@ module.exports = function(particulas,c1,c2,m,fitness,w,min,max,analise){
 		}
 	}
 	for(let i = 0; i < array_media.length; i++){
-		array_media[i] = array_media[i] / 30;
+		array_media[i] = array_media[i] / 1;
 	}
 		deferred.resolve(array_media);
 
